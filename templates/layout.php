@@ -19,11 +19,7 @@
             </div>
             <div>
             <?php
-                if($page === 'create'){
-                    include_once("templates/pages/create.php");
-                } else{
-                    include_once("templates/pages/list.php");
-                }
+                include_once("templates/pages/$page.php");
             ?>
             </div>
         </div>
