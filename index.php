@@ -12,7 +12,16 @@ const DEFAULT_ACTION = 'list';
 $action = $_GET['action'] ?? DEFAULT_ACTION;
 
 $view = new View();
-$view->render($action);
+
+$viewParams = [];
+if($action === 'create'){
+    $viewParams['resultCreate'] = "udało się";
+}else{
+    $viewParams['resultList'] = "wyświetlamy przepisy";
+}
+
+
+$view->render($action, $viewParams);
 
 
 
