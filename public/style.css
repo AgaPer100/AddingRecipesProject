@@ -99,8 +99,7 @@ form .field-textarea {
 
 form input[type=submit],
 form input[type=button] {
-  background: cadetblue;
-
+  background: rgb(123, 129, 216);
   border: none;
   color: #fff;
   font-size: 18px;
