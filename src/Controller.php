@@ -8,21 +8,32 @@ require_once("src/View.php");
 
 class Controller
 {
-    public function run(string $action): void
+    private const DEFAULT_ACTION = 'list';
+
+    private array $request;
+    private View $view;
+
+    public function __construct(array $request)
     {
-        $view = new View();
+        $this->request = $request;
+        $this->view = new View();
+    }
+
+    public function run(): void
+    {
         $viewParams = [];
 
-        switch($action){
+        switch($this->action()){
             case 'create':
                     $page = 'create';
                     $created = false;
-                
-                    if(!empty($_POST)){
+
+                    $data = $this->getRequestPost();
+                    if(!empty($data)){
                         $created = true;
                         $viewParams = [
-                            'title' => $_POST['title'],
-                            'description' => $_POST['description']
+                            'title' => $data['title'],
+                            'description' => $data['description']
                         ];
                     }
                     $viewParams['created'] = $created;
@@ -40,6 +51,23 @@ class Controller
         }
     
 
-        $view->render($page, $viewParams);
+        $this->view->render($page, $viewParams);
     }
+
+    private function action(): string
+    {
+        $data = $this->getRequestGet();
+        return $data['action'] ?? self::DEFAULT_ACTION;
+    }
+
+    private function getRequestGet(): array
+    {
+        return $this->request['get'] ?? [];
+    }
+
+    private function getRequestPost(): array
+    {
+        return $this->request['post'] ?? [];
+    }
+
 }
